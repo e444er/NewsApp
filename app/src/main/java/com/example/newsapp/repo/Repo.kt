@@ -6,5 +6,6 @@ import javax.inject.Inject
 class Repo @Inject constructor(
     private val newsService: NewsService
 ) {
-    suspend fun getAll() = newsService.getHeadLines()
+    suspend fun getNews(countryCode: String, pageNumber:Int) =
+        newsService.getHeadLines(countryCode, pageNumber)
 }

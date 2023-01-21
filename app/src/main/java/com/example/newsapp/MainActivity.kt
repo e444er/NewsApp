@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.fragment_splash)
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(3000)
+            delay(1000)
             setContentView(binding.root)
 
             val navHostFragment =
