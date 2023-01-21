@@ -1,19 +1,16 @@
 package com.example.newsapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.newsapp.databinding.ActivityMainBinding
-import com.example.newsapp.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.fragment_splash)
 
-        Handler(Looper.myLooper()!!).postDelayed({
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(3000)
             setContentView(binding.root)
 
             val navHostFragment =
@@ -32,8 +30,7 @@ class MainActivity : AppCompatActivity() {
             val navController = navHostFragment.navController
 
             binding.bottomNavigationView.setupWithNavController(navController)
-        }, 2000)
-
+        }
     }
 
 }

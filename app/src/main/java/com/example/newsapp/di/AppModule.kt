@@ -1,5 +1,8 @@
 package com.example.newsapp.di
 
+import android.app.Application
+import androidx.room.Room
+import com.example.newsapp.data.db.NewsDatabase
 import com.example.newsapp.data.api.NewsService
 import com.example.newsapp.utils.Constants.BASE_URL
 import dagger.Module
@@ -37,5 +40,15 @@ object AppModule {
             .client(okHttpClient())
             .build()
             .create(NewsService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideNoteDatabase(app: Application): NewsDatabase {
+        return Room.databaseBuilder(
+            app,
+            NewsDatabase::class.java,
+            "articles"
+        ).build()
+    }
 
 }
