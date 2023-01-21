@@ -42,7 +42,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     binding.progressBar.visibility = View.VISIBLE
                 }
             }
-
         }
     }
 
