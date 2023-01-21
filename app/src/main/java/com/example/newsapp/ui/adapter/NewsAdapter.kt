@@ -13,6 +13,7 @@ import com.example.newsapp.model.Article
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
+    var onItemClickListener: ((Article) -> Unit)? = null
     inner class NewsViewHolder(val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val callback = object : DiffUtil.ItemCallback<Article>() {
@@ -44,11 +45,8 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
             articleTitle.text = article.title
             articleDate.text = article.publishedAt
         }
-    }
-
-    private var onItemClickListener: ((Article) -> Unit)? = null
-
-    fun setOnItemClickListener(listener: (Article) -> Unit){
-        onItemClickListener = listener
+        holder.binding.root.setOnClickListener {
+            onItemClickListener?.invoke(article)
+        }
     }
 }

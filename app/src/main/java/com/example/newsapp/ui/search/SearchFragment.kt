@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentSearchBinding
 import com.example.newsapp.ui.adapter.NewsAdapter
+import com.example.newsapp.ui.main.MainFragmentDirections
 import com.example.newsapp.utils.Resource
 import com.example.newsapp.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +34,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         searchText()
+        setClick()
 
         viewModel.searchLiveData.observe(viewLifecycleOwner) { response ->
             when (response) {
@@ -75,6 +79,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
+        }
+    }
+
+    private fun setClick() {
+        newsAdapter.onItemClickListener = {
+            val nav = SearchFragmentDirections.actionSearchFragmentToDetailsFragment(
+                article = it
+            )
+            findNavController().navigate(nav)
         }
     }
 }

@@ -3,9 +3,11 @@ package com.example.newsapp.ui.main
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentMainBinding
@@ -23,6 +25,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
+        setClick()
 
         viewModel.newsLiveData.observe(viewLifecycleOwner){response ->
             when(response){
@@ -54,5 +57,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-
+    private fun setClick() {
+        newsAdapter?.onItemClickListener = {
+            val nav = MainFragmentDirections.actionMainFragmentToDetailsFragment(
+                article = it
+            )
+            findNavController().navigate(nav)
+        }
+    }
 }
