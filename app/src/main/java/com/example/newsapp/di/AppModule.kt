@@ -1,13 +1,16 @@
 package com.example.newsapp.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.example.newsapp.data.db.NewsDatabase
 import com.example.newsapp.data.api.NewsService
+import com.example.newsapp.data.db.ArticleDao
 import com.example.newsapp.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -43,12 +46,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNoteDatabase(app: Application): NewsDatabase {
-        return Room.databaseBuilder(
-            app,
+    fun provideArticleDatabase(@ApplicationContext context: Context) =
+         Room.databaseBuilder(
+             context,
             NewsDatabase::class.java,
             "articles"
         ).build()
+
+    @Provides
+    fun provideArticleDao(appDatabase: NewsDatabase): ArticleDao {
+        return appDatabase.articleDao
     }
 
 }

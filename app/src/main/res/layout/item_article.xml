@@ -53,20 +53,11 @@
         android:id="@+id/imageShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
         app:srcCompat="@drawable/baseline_share_24" />
-
-    <ImageView
-        android:id="@+id/imageFav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageShare"
-        app:layout_constraintStart_toEndOf="@+id/imageShare"
-        app:srcCompat="@drawable/baseline_favorite_border_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,10 @@ import com.example.newsapp.model.Article
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     var onItemClickListener: ((Article) -> Unit)? = null
-    inner class NewsViewHolder(val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root)
+    var onShareClickListener: ((Article) -> Unit)? = null
+
+    inner class NewsViewHolder(val binding: ItemArticleBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     private val callback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -29,8 +33,12 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        return NewsViewHolder(ItemArticleBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false))
+        return NewsViewHolder(
+            ItemArticleBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false
+            )
+        )
     }
 
     override fun getItemCount(): Int {
@@ -44,6 +52,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
             articleImage.clipToOutline = true
             articleTitle.text = article.title
             articleDate.text = article.publishedAt
+        }
+        holder.binding.imageShare.setOnClickListener {
+            onShareClickListener?.invoke(article)
+
         }
         holder.binding.root.setOnClickListener {
             onItemClickListener?.invoke(article)

@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -88,6 +89,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 article = it
             )
             findNavController().navigate(nav)
+        }
+        newsAdapter.onShareClickListener = {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.type = "text/plain"
+            intent.putExtra("Share this", it.url)
+            val chooser = Intent.createChooser(intent, "Share using...")
+            startActivity(chooser)
         }
     }
 }
