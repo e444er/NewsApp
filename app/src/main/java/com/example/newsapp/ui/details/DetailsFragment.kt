@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -44,15 +43,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
 
         binding.imageShare.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.putExtra(Intent.EXTRA_TEXT, args.article.url)
             intent.type = "text/plain"
-            intent.putExtra("Share this", args.article.url)
-            val chooser = Intent.createChooser(intent, "Share using...")
-            startActivity(chooser)
+            startActivity(Intent.createChooser(intent, "Share using..."))
         }
 
         binding.imageFavorite.setOnClickListener {
-           viewModel.saveArticles(args.article)
+            viewModel.saveArticles(args.article)
         }
     }
 
@@ -61,7 +59,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         if (article.isEmpty()) {
             binding.imageFavorite.isVisible = false
             binding.imageFavdis.isVisible = true
-        }else {
+        } else {
             binding.imageFavorite.isVisible = true
             binding.imageFavdis.isVisible = false
         }

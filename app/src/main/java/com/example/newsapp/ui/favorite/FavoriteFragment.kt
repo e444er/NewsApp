@@ -61,11 +61,10 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
         }
 
         newsAdapter.onShareClickListener = {
-            val intent = Intent(Intent.ACTION_VIEW)
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.putExtra(Intent.EXTRA_TEXT, it.url)
             intent.type = "text/plain"
-            intent.putExtra("Share this", it.url)
-            val chooser = Intent.createChooser(intent, "Share using...")
-            startActivity(chooser)
+            startActivity(Intent.createChooser(intent, "Share using..."))
         }
     }
 
