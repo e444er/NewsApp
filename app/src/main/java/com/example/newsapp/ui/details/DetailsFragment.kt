@@ -59,11 +59,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     ///????
     private fun like(article: List<Article>) {
         if (article.isEmpty()) {
-            binding.imageFavorite.isVisible = true
-            binding.imageFavdis.isVisible = false
-        }else {
             binding.imageFavorite.isVisible = false
             binding.imageFavdis.isVisible = true
+        }else {
+            binding.imageFavorite.isVisible = true
+            binding.imageFavdis.isVisible = false
         }
     }
 }
