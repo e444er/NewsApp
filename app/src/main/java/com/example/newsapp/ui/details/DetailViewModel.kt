@@ -21,10 +21,6 @@ class DetailViewModel @Inject constructor(
     val getArticles: LiveData<List<Article>> =
         repo.getFavoriteArticles()
 
-//    fun getArticles() = viewModelScope.launch(Dispatchers.IO) {
-//         repo.getFavoriteArticles()
-//    }
-
     fun saveArticles(article: Article) = viewModelScope.launch(Dispatchers.IO) {
         repo.addArticle(article)
     }

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,16 +25,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Glide.with(binding.root)
-            .load(args.article.urlToImage)
-            .into(binding.imageView)
+        like(args.article)
+
+        Glide.with(binding.root).load(args.article.urlToImage).into(binding.imageView)
         binding.textTitle.text = args.article.title
         binding.textQ.text = args.article.description
 
         binding.button.setOnClickListener {
-            val url = Intent()
-                .setAction(Intent.ACTION_VIEW)
-                .addCategory(Intent.CATEGORY_BROWSABLE)
+            val url = Intent().setAction(Intent.ACTION_VIEW).addCategory(Intent.CATEGORY_BROWSABLE)
                 .setData(Uri.parse(args.article.url))
             startActivity(url)
 
@@ -48,25 +45,21 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             startActivity(Intent.createChooser(intent, "Share using..."))
         }
 
-        binding.check.setOnCheckedChangeListener{ _, isChecked ->
-
-            if (isChecked){
-                viewModel.deleteArticles(args.article)
-            }else {
-                viewModel.saveArticles(args.article)
-            }
+        binding.imageFavorite.setOnClickListener {
+            viewModel.saveArticles(args.article)
         }
+        binding.imageFavdis.setOnClickListener {
+            viewModel.deleteArticles(args.article)
+        }
+    }
 
-//        binding.imageFavdis.setOnClickListener {
-//            viewModel.deleteArticles(args.article)
-//            binding.imageFavdis.isVisible = false
-//            binding.imageFavorite.isVisible = true
-//        }
-//
-//        binding.imageFavorite.setOnClickListener {
-//            viewModel.saveArticles(args.article)
-//            binding.imageFavdis.isVisible = true
-//            it.isVisible = false
-//        }
+    fun like(article: Article) {
+        if (article.id == null) {
+            binding.imageFavdis.isVisible = false
+            binding.imageFavorite.isVisible = true
+        } else {
+            binding.imageFavdis.isVisible = true
+            binding.imageFavorite.isVisible = false
+        }
     }
 }
